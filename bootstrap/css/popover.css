@@ -1,0 +1,41 @@
+/* Popover styling */
+.pop-title {
+  font-size: 18pt;
+  color: rgb(228, 68, 68);
+  text-align: center;
+  padding: 10px;
+}
+
+.pop-cnt {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  transform: translate(0, 10px);
+  background-color: #b22222;
+  border-radius: 10%;
+  padding: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  width: auto;
+}
+.pop-cnt:before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  right: calc(50% - 10px);
+  top: -6px;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #b22222 transparent;
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+.pop-wrap:hover .pop-cnt {
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -20px);
+  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+.pop-msg {
+  text-align: center;
+}

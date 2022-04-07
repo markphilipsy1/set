@@ -1,0 +1,163 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://cvsu.edu.ph/wp-content/uploads/2018/01/CvSU-logo-trans.png" sizes="192x192">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+
+    <title>CvSU Google Log-in v1</title>
+  </head>
+
+  <body>
+    <form class="form-signin">
+      <h1 class="h4 mb-3 font-weight-normal">Cavite State University</h1>
+      <h2 class="h5 mb-3 font-weight-normal">CvSU Google Log-in  </h2>
+      <h3 class="h6 mb-3 font-weight-normal">By signing in, you are authorizing Cavite State University to collect, store and process the data given to the system for the purpose of <i>"put purpose "</i>.</h3>      
+        <div align="center" id="my-signin2"></div>
+        <img src="" id="profpic">
+        <h3 class="h5 mb-3 font-weight-normal" id="userSignedIn"></h3>
+      
+      <p class="mt-5 mb-3 text-muted">&copy; 2021-2022</p>
+
+    </form>
+
+  <script>
+    
+    function renderButton() { //Google sign-in button design
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+
+  </script>
+
+  <script type="text/javascript">
+
+      var signinEmail = "";
+
+/**
+ * The Sign-In client object.
+ */
+var auth2;
+
+/**
+ * Initializes the Sign-In client.
+ */
+
+var initClient = function() {
+    gapi.load('auth2', function(){
+        /**
+         * Retrieve the singleton for the GoogleAuth library and set up the
+         * client.
+         */
+        auth2 = gapi.auth2.init({
+            client_id: '886182517546-dn402pnreelcbrh6riae8ik7f3dgv2ql.apps.googleusercontent.com'
+        });
+
+        // Attach the click handler to the sign-in button
+        auth2.attachClickHandler('my-signin2', {}, onSuccess, onFailure);
+
+        auth2.then(function() {
+          var isSignedIn = auth2.isSignedIn.get();
+          var currentUser = auth2.currentUser.get();
+
+          if (isSignedIn) {
+            // alert("b");
+            // Pass currentUser to onSignIn callback.
+            document.getElementById('profpic').src = currentUser.getBasicProfile().getImageUrl();
+             signinEmail = currentUser.getBasicProfile().getEmail();
+            document.getElementById('userSignedIn').innerHTML='<div class="btn btn-md btn-primary " onclick="checkUser()">Continue as '+ currentUser.getBasicProfile().getName()+' </div><br><br>'
+            +'<div class="btn btn-danger" onclick="signOut()">Log-out</div>';
+          } else {
+            // User is not signed in.
+
+            renderButton();
+          }
+        });//auth2.then
+    });//gapi.load
+};//initCLient
+
+/**
+ * Handle successful sign-ins.
+ */
+var onSuccess = function(user) {
+    signinEmail = user.getBasicProfile().getEmail();
+    console.log('Signed in as ' + user.getBasicProfile().getName());
+    checkUser();
+
+ };
+
+/**
+ * Handle sign-in failures.
+ */
+var onFailure = function(error) {
+    console.log(error);
+};
+ function signOut() {
+
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+          auth2.disconnect();
+      });
+      // alert("bye");
+      setTimeout(function(){ location.reload(); }, 1000);
+      // window.location.href="index.php";
+    }//signOut()
+
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=initClient" ></script>
+    <!-- <script type="text/javascript">initClient();</script> -->
+    <script type="text/javascript">
+      function checkUser(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+               // alert(this.responseText);
+               if(this.responseText==1){
+                window.location.href="../studProf.php";//divert to any directory or page
+               }
+               if(this.responseText==2){
+                window.location.href="../prof.php";//divert to any directory or page
+               }
+               if(this.responseText==0){
+                
+                //you can display an alert or divert to another page
+                alert("Sorry, You are not authorized to use this site. Thank you.");
+                //or you can divert them to a registration page or an error page
+
+               }
+            }
+        };
+        xhr.open('POST', 'check.php');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('email=' + signinEmail);
+
+
+      }//AJAX checkuser()
+      
+    </script>
+
+
+  </body>
+</html>
+
+<style type="text/css">
+  body{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+  #profpic {
+  border-radius: 50%;
+  }
+  
+</style>
