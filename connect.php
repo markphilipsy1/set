@@ -21,8 +21,8 @@ function openConn(){
 	$username = username;
 	$password = password;
 	$dbname = dbname;
-	$connect =mysqli_connect($servername, $username, $password,$dbname);
-	return $connect;
+	$objConnection =mysqli_connect($servername, $username, $password,$dbname);
+	return $objConnection;
 }
  
 
