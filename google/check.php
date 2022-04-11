@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../connection.php');
+include('../connect.php');
 if(!isset($_POST['email'])){
 	header("Location:googlelogin.html");
 
@@ -21,11 +21,11 @@ $count = mysqli_num_rows($query);
 
 if($count>0){// if account is authorized, you can retrieve the email / details of the user
 		$row = mysqli_fetch_array($query);
-		$role = 'student';
+		$role = 1;
 		echo $role; // you may have roles or level of access of the user. Use in diverting the page
 		//Create the sessions that can be used all through out the system
 		$_SESSION['email'] = $email;
-		$_SESSION['access'] = $role;
+		$_SESSION['access'] ='student';
 }
 else
 	echo '0';//no account found

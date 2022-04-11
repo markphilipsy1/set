@@ -16,7 +16,7 @@
     <form class="form-signin">
       <h1 class="h4 mb-3 font-weight-normal">Cavite State University</h1>
       <h2 class="h5 mb-3 font-weight-normal">CvSU Google Log-in  </h2>
-      <h3 class="h6 mb-3 font-weight-normal">By signing in, you are authorizing Cavite State University to collect, store and process the data given to the system for the purpose of <i>"put purpose "</i>.</h3>      
+      <h3 class="h6 mb-3 font-weight-normal">By signing in, you are authorizing Cavite State University to collect, store and process the data given to the system for the purpose of student evaluation for teachers.</h3>      
         <div align="center" id="my-signin2"></div>
         <img src="" id="profpic">
         <h3 class="h5 mb-3 font-weight-normal" id="userSignedIn"></h3>
@@ -92,7 +92,7 @@ var initClient = function() {
  */
 var onSuccess = function(user) {
     signinEmail = user.getBasicProfile().getEmail();
-    // checkUser();
+    checkUser();
     console.log('Signed in as ' + user.getBasicProfile().getName());
 
  };
@@ -119,8 +119,10 @@ var onFailure = function(error) {
     <!-- <script type="text/javascript">initClient();</script> -->
     <script type="text/javascript">
       function checkUser(){
+        alert("here");
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
+
             if (this.readyState == 4 && this.status == 200) {
                // alert(this.responseText);
                if(this.responseText==1){
