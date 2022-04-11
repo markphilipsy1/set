@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('../connect.php');
-if(!isset($_GET['email'])){
+if(!isset($_POST['email'])){
 	header("Location:googlelogin.html");
 
 }
@@ -13,7 +13,7 @@ function logme($content){//log action to log file
 	fclose($myfile);
 }
 $objConnection=openConn();
-$email =  $_GET['email'];
+$email =  $_POST['email'];
 $sql = "SELECT * FROM enrollstudentgsuite WHERE email = '$email'";//select email from yourDatabase where registered=1 or authorized =1
 logme($sql);
 $query = mysqli_query($objConnection,$sql) ;
