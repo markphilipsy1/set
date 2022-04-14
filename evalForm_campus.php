@@ -14,6 +14,11 @@
 		$res2 = mysqli_query($connect, $sql2);
 		$rw_cnt = mysqli_num_rows($res2);
 
+		$sql = "SELECT prof_id, concat(prof_fname,' ',prof_lname) AS prof_name FROM tbl_prof WHERE prof_id = $prof_id";
+		$active = mysqli_query($connect, "SELECT MAX(id) as id FROM tbl_period");
+		$res = mysqli_fetch_assoc($active);
+		$period = $res['id'];
+
 		for ($i=1; $i <= $rw_cnt; $i++) { 
 			$ans[$i] = $_POST["aq".$i];
 		}
@@ -22,7 +27,7 @@
 
 		// echo $evalscore;
 
-		$ins_ans = "INSERT INTO ".$_SESSION['cursemyr']." values (NULL, $stud_id, $prof_id, $evalscore)";
+		$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $evalscore, $period)";
 		$res3 = mysqli_query($connect, $ins_ans);
 
 		if ($res3) {

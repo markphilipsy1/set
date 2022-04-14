@@ -2,28 +2,25 @@
 	include 'connect.php'; 
 	session_start();
 
-	$sql = mysqli_query($connect, "SELECT CONCAT(semester, year) as semyr, semester, year FROM semyear WHERE semyear.id = (SELECT MAX(id) FROM semyear)");
-	$res = mysqli_fetch_assoc($sql);
-
-	$_SESSION['cursemyr'] = $res['semyr'];
-	$semester = $res['semester'];
-	$year = $res['year'];
-
 	if ($_SESSION['access'] != 'admin') {
 		header('location:index.php');
 		session_destroy();
 	}
 
-	$sem = $semester;
-	$schyear = $year;
+	$sql = mysqli_query($connect, "SELECT * FROM tbl_period WHERE active = 1");
+	$period = mysqli_fetch_array($sql);
+
 	if (isset($_POST['review'])) {
 		$sem = $_POST['sem'];
 		$schyear = $_POST['schyear'];
 
-		$_SESSION['semyr'] = $sem.$schyear;
+		$sql = mysqli_query($connect, "UPDATE tbl_period SET active = 0 WHERE active = 1");
+		$sql = mysqli_query($connect, "UPDATE tbl_period SET active = 1 WHERE semester = '$sem' AND year = $schyear");
+		header("Refresh:0");
+		// $_SESSION['semyr'] = $sem.$schyear;
 	}
 
-	$num_eval = "SELECT * FROM ".$_SESSION['semyr']." GROUP BY prof_id";
+	$num_eval = "SELECT * FROM tbl_eval a INNER JOIN tbl_period b ON a.period = b.id WHERE b.id = (SELECT id FROM tbl_period WHERE active =1) GROUP BY prof_id";
 	$res = mysqli_query($connect, $num_eval);
 
 	if ($res) {
@@ -38,7 +35,7 @@
 
 	$coll = array('CAFENR', 'CAS', 'CCJ', 'CED', 'CEIT', 'CEMDS', 'CON', 'CSPEAR', 'CVMBS');
 	for ($i=0; $i < count($coll); $i++) { 
-		$sql = "SELECT * FROM tbl_prof a INNER JOIN ".$_SESSION['semyr']." b on a.prof_id = b.prof_id WHERE prof_col = '$coll[$i]' GROUP BY b.prof_id";
+		$sql = "SELECT * FROM tbl_prof a INNER JOIN tbl_eval b on a.prof_id = b.prof_id INNER JOIN tbl_period c ON b.period = c.id WHERE prof_col = '$coll[$i]' AND c.id = (SELECT id FROM tbl_period WHERE active = 1) GROUP BY b.prof_id";
 		$res = mysqli_query($connect, $sql);
 
 		if ($res) {
@@ -52,7 +49,7 @@
 
 	$camp = array('BACOOR', 'CARMONA', 'CAVITE CITY', 'GENTRI', 'IMUS', 'MARAGONDON', 'NAIC', 'ROSARIO', 'SILANG', 'TANZA', 'TMC');
 	for ($j=0; $j < count($camp); $j++) { 
-		$sql1 = "SELECT * FROM tbl_prof a INNER JOIN ".$_SESSION['semyr']." b on a.prof_id = b.prof_id WHERE prof_campus = '$camp[$j]' GROUP BY b.prof_id";
+		$sql1 = "SELECT * FROM tbl_prof a INNER JOIN tbl_eval b on a.prof_id = b.prof_id INNER JOIN tbl_period c ON b.period = c.id WHERE prof_campus = '$camp[$j]' AND c.id = (SELECT id FROM tbl_period WHERE active = 1) GROUP BY b.prof_id";
 		$res1 = mysqli_query($connect, $sql1);
 
 		if ($res1) {
@@ -102,7 +99,7 @@
   	</nav>
   	<div class="container">
   		<?php
-  			echo "<p class='h5 text-right'>Current Semester and Year: <span class='text-uppercase'>".$semester."</span> ".$year. "</p>";
+  			echo "<p class='h5 text-right'>Current Semester and Year: <span class='text-uppercase'>".$period['semester']."</span> ".$period['year']. "</p>";
   			echo "<p class='h5 text-right'>Teachers Evaluated: ".$eval_cnt."/".$prof_cnt. "</p>";
   			// echo "<br>";
   			// echo "<p class='h5 text-left' id='review'>Reviewing: <span class='text-uppercase'>".$sem."</span> SEM ".$schyear. "</p>";
@@ -120,9 +117,9 @@
 					    <div class="col-sm-2">
 							<select id="schyear" name="schyear" class="custom-select">
 							   	<?php 
-							   		$sql = mysqli_query($connect, "SELECT year, year+1 as nextyr FROM semyear");
+							   		$sql = mysqli_query($connect, "SELECT DISTINCT(year) FROM tbl_period");
 							   		while ($year = mysqli_fetch_array($sql)) {
-							   			echo "<option value='".$year['year']."'>".$year['year']."-".$year['nextyr']."</option>";
+							   			echo "<option value='".$year['year']."'>".$year['year']."-".($year['year']+1)."</option>";
 							   		}
 
 							   	 ?>
@@ -172,7 +169,7 @@
 	  	</div>
 	  	<br>
 	  	<hr>
-	  	<button class="btn btn-dark text-center form-control" style="height: 3em;" onclick="complete()">Complete Evaluation</button>
+	  	<!-- <button class="btn btn-dark text-center form-control" style="height: 3em;" onclick="complete()">Complete Evaluation</button> -->
   	</div>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>

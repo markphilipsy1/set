@@ -54,7 +54,7 @@
   				<td>Adjective</td>
   			</tr>
   		<?php 
-			$sql = mysqli_query($connect, "SELECT a.prof_id, COUNT(a.prof_id) as samp_size, CONCAT(b.prof_fname,' ',b.prof_lname) as prof_name FROM ".$_SESSION['semyr']." a INNER JOIN tbl_prof b ON a.prof_id = b.prof_id WHERE b.prof_campus = '$campus' GROUP BY a.prof_id");
+			$sql = mysqli_query($connect, "SELECT a.prof_id, COUNT(a.prof_id) as samp_size, CONCAT(b.prof_fname,' ',b.prof_lname) as prof_name FROM tbl_eval a INNER JOIN tbl_prof b ON a.prof_id = b.prof_id INNER JOIN tbl_period c ON a.period = c.id WHERE b.prof_campus = '$campus' AND c.id = (SELECT id FROM tbl_period WHERE active = 1) GROUP BY a.prof_id");
 			$row_cnt = mysqli_num_rows($sql);
 
 			while ($row = mysqli_fetch_assoc($sql)) {
@@ -93,7 +93,7 @@
 					}
 					$scores = implode('+', $score);
 
-					$sql = mysqli_query($connect, "SELECT COUNT(a.prof_id) as samp_size, CONCAT(b.prof_fname,' ',b.prof_lname) as prof_name, SUM($scores) as total FROM ".$_SESSION['semyr']." a INNER JOIN tbl_prof b ON a.prof_id = b.prof_id WHERE b.prof_campus = '$campus' AND a.prof_id = $prof GROUP BY a.prof_id");
+					$sql = mysqli_query($connect, "SELECT COUNT(a.prof_id) as samp_size, CONCAT(b.prof_fname,' ',b.prof_lname) as prof_name, SUM($scores) as total FROM tbl_eval a INNER JOIN tbl_prof b ON a.prof_id = b.prof_id WHERE b.prof_campus = '$campus' AND a.prof_id = $prof GROUP BY a.prof_id");
 					$row_cnt = mysqli_num_rows($sql);
 					$sum = array();
 					while ($row = mysqli_fetch_assoc($sql)) {

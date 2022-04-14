@@ -5,9 +5,11 @@
 	if ($_SESSION['access'] == 'student') {
 		$prof_id = $_GET['prof_id'];
 		$stud_id = $_SESSION['studentnumber'];
-		$semyr = $_SESSION['cursemyr'];
 
 		$sql = "SELECT prof_id, concat(prof_fname,' ',prof_lname) AS prof_name FROM tbl_prof WHERE prof_id = $prof_id";
+		$active = mysqli_query($connect, "SELECT MAX(id) as id FROM tbl_period");
+		$res = mysqli_fetch_assoc($active);
+		$period = $res['id'];
 
 		$res = mysqli_query($connect, $sql);
 		$inst = mysqli_fetch_assoc($res);
@@ -23,7 +25,7 @@
 
 			$evalscore = implode(", ", $ans);
 
-			$ins_ans = "INSERT INTO $semyr values (NULL, $stud_id, $prof_id, $evalscore)";
+			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $evalscore, $period)";
 			$res3 = mysqli_query($connect, $ins_ans);
 
 			if ($res3) {

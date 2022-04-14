@@ -65,7 +65,7 @@
   				</thead>
   				<tbody>
   					<?php
-			  			$sql1 = "SELECT * FROM ".$_SESSION['semyr']." WHERE prof_id=$prof_id";
+			  			$sql1 = "SELECT * FROM tbl_eval a INNER JOIN tbl_period b ON a.period = b.id WHERE a.prof_id = $prof_id AND b.id = (SELECT id FROM tbl_period WHERE active = 1)";
 			  			$res = mysqli_query($connect, $sql1);
 			  			$row_cnt = mysqli_num_rows($res);
 				  		$number = 1;
