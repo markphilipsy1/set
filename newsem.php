@@ -2,41 +2,26 @@
   include 'connect.php';
   session_start();
 
-  $sql = mysqli_query($connect, "SELECT CONCAT(semester, year) as semyr FROM semyear WHERE semyear.id = (SELECT MAX(id) FROM semyear)");
-  $res = mysqli_fetch_assoc($sql);
-  $cursemyr = $res['semyr'];
-
   // if ($_SESSION['access'] != 'student') {
   //   header('location:index.php');
   //   session_destroy();
   // }
 
+
   if (isset($_POST['newsem'])) {
     $newsem = $_POST['sem'];
     $newyear = $_POST['year'];
-    $newsemyr = $newsem.$newyear;
 
-    $sql = mysqli_query($connect, "SELECT * FROM semyear WHERE semester = '$newsem' AND year = '$newyear'");
-    $row = mysqli_fetch_array($sql);
-
+    $row = mysqli_query($connect, "SELECT * FROM tbl_period WHERE semester = '$newsem' AND year = $newyear");
     if ($row) {
-      echo "<script>alert('Selected Semester and Year already exist. Please try again.');
-            window.location.href = 'newsem.php';</script>";
+      echo "<script>alert('Semester and Year already exist!')
+            window.location.href = 'newsem.php'</script>"; 
     } else {
-      $sql = mysqli_query($connect, "CREATE TABLE $newsemyr LIKE $cursemyr");
-
-      if ($sql) {
-        $addnew = mysqli_query($connect, "INSERT INTO semyear VALUES ('$newsem', '$newyear', NULL)");
-        echo "<script>alert('Successfully added new semester.');
-              window.location.href = 'prof.php';</script>";
-      } else {
-        echo "<script>alert('Error. $newsemyr');
-              window.location.href = 'newsem.php';</script>";
-      }
+      $sql = mysqli_query($connect, "UPDATE tbl_period SET active = 0 WHERE id = (SELECT MAX(id) FROM tbl_period)");
+      $sql1 = mysqli_query($connect, "INSERT INTO tbl_period values (NULL, '$newsem', $newyear, 1)");
+      echo "<script>alert('New semester created!')
+            window.location.href = 'prof.php'</script>";
     }
-
-
-    // echo "<script>alert('$newsemyr')</script>";
   }
 ?>
 <!DOCTYPE html>

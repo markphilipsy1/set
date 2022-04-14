@@ -169,7 +169,7 @@
 	  	</div>
 	  	<br>
 	  	<hr>
-	  	<!-- <button class="btn btn-dark text-center form-control" style="height: 3em;" onclick="complete()">Complete Evaluation</button> -->
+	  	<button class="btn btn-dark text-center form-control" style="height: 3em;" onclick="complete()">Complete Evaluation</button>
   	</div>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
