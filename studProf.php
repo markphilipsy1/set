@@ -7,18 +7,12 @@
 		session_destroy();
 	}
 
-	$sql = mysqli_query($connect, "SELECT CONCAT(semester, year) as semyr FROM semyear WHERE id = (SELECT MAX(id) FROM semyear)");
-	$res = mysqli_fetch_assoc($sql);
-
-	$_SESSION['semyr'] = $res['semyr'];
-					
-	echo $_SESSION['semyr'];
 	$sql = "SELECT studentNumber, course, firstName, lastName, middleName, suffix, dateOfBirth, concat(municipality, ', ' ,province) as address, mobilePhone FROM enrollstudentinformation WHERE studentNumber = ". $_SESSION['studentnumber'];
 	// $sql = "SELECT * FROM studenttbl WHERE studentnumber = ".$_SESSION['studentnumber'];
 	$res = mysqli_query($connect, $sql);
 	$stud = mysqli_fetch_assoc($res);
 
-  	$sql1 = "SELECT a.studentNumber, b.schedcode, c.subjectCode, c.instructor, d.subjectTitle, concat(e.prof_fname,' ', e.prof_lname) as prof_name from enrollstudentinformation a inner join enrollsubjectenrolled b on a.studentnumber = b.studentnumber inner join enrollscheduletbl c on b.schedcode = c.schedcode inner join enrollsubjectstbl d on c.subjectCode = d.subjectcode left join tbl_prof e on c.instructor = e.prof_id";
+  	$sql1 = "SELECT a.studentNumber, b.schedcode, c.subjectCode, c.instructor, d.subjectTitle, concat(e.prof_fname,' ', e.prof_lname) as prof_name from enrollstudentinformation a inner join enrollsubjectenrolled b on a.studentnumber = b.studentnumber inner join enrollscheduletbl c on b.schedcode = c.schedcode inner join enrollsubjectstbl d on c.subjectCode = d.subjectcode left join tbl_prof e on c.instructor = e.prof_id WHERE studentnumber = ".$_SESSION['studentnumber'];
   	$res1 = mysqli_query($connect, $sql1);
 ?>
 <!DOCTYPE html>
