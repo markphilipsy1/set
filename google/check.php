@@ -26,6 +26,7 @@ if($count>0){// if account is authorized, you can retrieve the email / details o
 		//Create the sessions that can be used all through out the system
 		$_SESSION['email'] = $email;
 		$_SESSION['access'] ='student';
+		$_SESSION['studentnumber'] = $row['studentnumber'];
 }
 else
 	echo '0';//no account found
