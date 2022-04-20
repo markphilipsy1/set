@@ -69,30 +69,22 @@
 			  			$res = mysqli_query($connect, $sql1);
 			  			$row_cnt = mysqli_num_rows($res);
 				  		$number = 1;
-			  			$seca = 0;
-			  			$secb = 0;
-			  			$secc = 0;
-			  			$secd = 0;
+
+				  		$forran = mysqli_query($connect, "SELECT * FROM tbl_ques");
+				  		$cntr = mysqli_num_rows($forran);
+				  		$counter = range(0, $cntr, 5);
 
 			  			if ($row_cnt != 0) {
 				  			while ($score = mysqli_fetch_assoc($res)) {
 				  				echo "<tr>";
 				  				echo "<td><strong>".$number."</strong></td>";
-				  				for ($i=0; $i < 5 ; $i++) { 
-				  					$seca += $score['score'.$i.''];
-				  					echo "<td>".$score['score'.$i.'']."</td>";
-				  				}
-				  				for ($j=5; $j < 10 ; $j++) { 
-				  					$secb += $score['score'.$j.''];
-				  					echo "<td>".$score['score'.$j.'']."</td>";
-				  				}
-				  				for ($k=10; $k < 15 ; $k++) { 
-				  					$secc += $score['score'.$k.''];
-				  					echo "<td>".$score['score'.$k.'']."</td>";
-				  				}
-				  				for ($l=15; $l < 20 ; $l++) { 
-				  					$secd += $score['score'.$l.''];
-				  					echo "<td>".$score['score'.$l.'']."</td>";
+
+				  				for ($a=0; $a < count($counter); $a++) { 
+				  					$min = $counter[$a];
+				  					$max = next($counter);
+					  				for ($i=$min; $i < $max; $i++) { 
+					  					echo "<td>".$score['score'.$i.'']."</td>";
+					  				}
 				  				}
 				  				echo "</tr>";
 				  				$number++;
@@ -106,8 +98,6 @@
   					echo "<center><small>Nothing to show here.</small></center>";
   				}
   			 ?>
-  			
-  		<!-- <center><small>Nothing to show here.</small></center> -->
   		<br>
   		<div><button class="btn btn-default" onclick="window.history.back();"><span class="fas fa-chevron-left"></span> Back to List</button></div>
   	</div>

@@ -25,9 +25,7 @@
 
 		$evalscore = implode(", ", $ans);
 
-		// echo $evalscore;
-
-		$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $evalscore, $period)";
+		$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore)";
 		$res3 = mysqli_query($connect, $ins_ans);
 
 		if ($res3) {

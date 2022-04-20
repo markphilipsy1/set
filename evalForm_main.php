@@ -25,7 +25,8 @@
 
 			$evalscore = implode(", ", $ans);
 
-			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $evalscore, $period)";
+
+			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore)";
 			$res3 = mysqli_query($connect, $ins_ans);
 
 			if ($res3) {
@@ -33,7 +34,7 @@
 						window.location.href='studProf.php';</script>";
 				// header("location:studProf.php");
 			} else {
-				echo "<script>alert('Scores not submitted!');
+				echo "<script>alert('Scores not submitted! $evalscore');
 						window.location.href='studProf.php';</script>";
 				// header("location:studProf.php");
 			// header("location:studProf.php");

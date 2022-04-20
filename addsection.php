@@ -23,7 +23,7 @@
 		$quesnum = mysqli_num_rows($sql);
 
 		for ($i=$quesnum; $i < $quesnum+5; $i++) { 
-			$sql = mysqli_query($connect, "ALTER TABLE ".$_SESSION['cursemyr']." ADD score$i int(11)");
+			$sql = mysqli_query($connect, "ALTER TABLE tbl_eval ADD score$i int(11) DEFAULT 0");
 		}
 
 		for ($i=0; $i < 5; $i++) { 
@@ -32,8 +32,9 @@
 		}
 
 		if ($res && $res1 && $sql) {
-			echo "<script>alert('Added new section and questions successfully!')</script>";
-			header('location:evalForm_main.php');
+			echo "<script>alert('Added new section and questions successfully!')
+					window.location.href = 'evalForm_main.php'</script>";
+			// header('location:evalForm_main.php');
 		} else {
 			echo "<script>alert('Adding new section and question not complete!')</script>";
 			header('Refresh:0');

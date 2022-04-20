@@ -18,10 +18,13 @@
 	$quesnum = mysqli_num_rows($sql);
 
 	for ($i=$quesnum; $i < $quesnum+5; $i++) { 
-		$sql = mysqli_query($connect, "ALTER TABLE ".$_SESSION['cursemyr']." DROP COLUMN score$i");
+		$sql = mysqli_query($connect, "ALTER TABLE tbl_eval DROP COLUMN score$i");
 	}
 
-	echo "<script>alert('Deleted')</script>";
+	$sql = mysqli_query($connect, "ALTER TABLE tbl_ques AUTO_INCREMENT = (SELECT MAX(id) FROM tbl_ques)");
 
-	header('location:evalForm_main.php');
+	echo "<script>alert('Successfully deleted.');
+			window.location.href='evalForm_main.php';</script>";
+
+	// header('location:evalForm_main.php');
  ?>
