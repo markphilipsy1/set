@@ -11,9 +11,6 @@
 		$sectionname = $_POST['section'];
 		$questions = array($_POST['q1'], $_POST['q2'], $_POST['q3'], $_POST['q4'], $_POST['q5']);
 
-		$sql = "INSERT INTO questionsection values (NULL, '$sectionname')";
-		$res = mysqli_query($connect, $sql);
-
 		$last = "SELECT max(section) as last FROM questionsection";
 		$reslast = mysqli_query($connect, $last);
 		$row = mysqli_fetch_array($reslast);
@@ -31,7 +28,8 @@
 			$res1 = mysqli_query($connect, $sql1);
 		}
 
-		if ($res && $res1 && $sql) {
+		if ($res1 && $sql) {
+			$sql = mysqli_query($connect, "INSERT INTO questionsection values (NULL, '$sectionname')");
 			echo "<script>alert('Added new section and questions successfully!')
 					window.location.href = 'evalForm_main.php'</script>";
 			// header('location:evalForm_main.php');
