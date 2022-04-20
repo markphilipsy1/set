@@ -12,8 +12,10 @@
     $newsem = $_POST['sem'];
     $newyear = $_POST['year'];
 
-    $row = mysqli_query($connect, "SELECT * FROM tbl_period WHERE semester = '$newsem' AND year = $newyear");
-    if ($row) {
+    $sql = mysqli_query($connect, "SELECT * FROM tbl_period WHERE semester = '$newsem' AND year = $newyear");
+    $row = mysqli_num_rows($sql);
+    
+    if ($row != 0) {
       echo "<script>alert('Semester and Year already exist!')
             window.location.href = 'newsem.php'</script>"; 
     } else {
