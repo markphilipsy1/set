@@ -18,7 +18,9 @@
 
 		$sql = mysqli_query($connect, "SELECT * FROM tbl_ques");
 		$quesnum = mysqli_num_rows($sql);
-
+		
+		$sql = mysqli_query($connect, "INSERT INTO questionsection values (NULL, '$sectionname')");
+		
 		for ($i=$quesnum; $i < $quesnum+5; $i++) { 
 			$sql = mysqli_query($connect, "ALTER TABLE tbl_eval ADD score$i int(11) DEFAULT 0");
 		}
@@ -29,7 +31,6 @@
 		}
 
 		if ($res1 && $sql) {
-			$sql = mysqli_query($connect, "INSERT INTO questionsection values (NULL, '$sectionname')");
 			echo "<script>alert('Added new section and questions successfully!')
 					window.location.href = 'evalForm_main.php'</script>";
 			// header('location:evalForm_main.php');
