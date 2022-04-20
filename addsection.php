@@ -22,15 +22,14 @@
 		$sql = mysqli_query($connect, "INSERT INTO questionsection values (NULL, '$sectionname')");
 		
 		for ($i=$quesnum; $i < $quesnum+5; $i++) { 
-			$sql = mysqli_query($connect, "ALTER TABLE tbl_eval ADD score$i int(11) DEFAULT 0");
+			$sql1 = mysqli_query($connect, "ALTER TABLE tbl_eval ADD score$i int(11) DEFAULT 0");
 		}
 
 		for ($i=0; $i < 5; $i++) { 
-			$sql1 = "INSERT INTO tbl_ques values (NULL, '$questions[$i]', $section)";
-			$res1 = mysqli_query($connect, $sql1);
+			$sql2 = mysqli_query($connect, "INSERT INTO tbl_ques values (NULL, '$questions[$i]', $section)");
 		}
 
-		if ($res1 && $sql) {
+		if ($sql1 && $sql2) {
 			echo "<script>alert('Added new section and questions successfully!')
 					window.location.href = 'evalForm_main.php'</script>";
 			// header('location:evalForm_main.php');
