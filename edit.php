@@ -14,7 +14,7 @@
 
 		if ($res) {
 			echo "<script>alert('Successfully updated!')
-				window.history.back();</script>";
+				window.location.href='mainlist.php?college=$college';</script>";
 		}
 	}
  ?>
