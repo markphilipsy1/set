@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 27, 2022 at 05:50 PM
+-- Generation Time: Apr 23, 2022 at 07:44 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -2245,52 +2245,6 @@ INSERT INTO `enrollsubjectstbl` (`subjectcode`, `description`, `lectunits`, `pr1
 -- --------------------------------------------------------
 
 --
--- Table structure for table `first2021`
---
-
-DROP TABLE IF EXISTS `first2021`;
-CREATE TABLE IF NOT EXISTS `first2021` (
-  `eval_id` int(11) NOT NULL AUTO_INCREMENT,
-  `studentnumber` varchar(50) NOT NULL,
-  `prof_id` int(11) NOT NULL,
-  `score0` int(11) NOT NULL,
-  `score1` int(11) NOT NULL,
-  `score2` int(11) NOT NULL,
-  `score3` int(11) NOT NULL,
-  `score4` int(11) NOT NULL,
-  `score5` int(11) NOT NULL,
-  `score6` int(11) NOT NULL,
-  `score7` int(11) NOT NULL,
-  `score8` int(11) NOT NULL,
-  `score9` int(11) NOT NULL,
-  `score10` int(11) NOT NULL,
-  `score11` int(11) NOT NULL,
-  `score12` int(11) NOT NULL,
-  `score13` int(11) NOT NULL,
-  `score14` int(11) NOT NULL,
-  `score15` int(11) NOT NULL,
-  `score16` int(11) NOT NULL,
-  `score17` int(11) NOT NULL,
-  `score18` int(11) NOT NULL,
-  `score19` int(11) NOT NULL,
-  PRIMARY KEY (`eval_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `first2021`
---
-
-INSERT INTO `first2021` (`eval_id`, `studentnumber`, `prof_id`, `score0`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `score13`, `score14`, `score15`, `score16`, `score17`, `score18`, `score19`) VALUES
-(1, '201810921', 10000, 3, 4, 5, 4, 3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5, 3, 4, 5, 3),
-(2, '201810921', 10011, 5, 4, 4, 4, 5, 4, 4, 5, 5, 5, 4, 4, 5, 5, 5, 4, 4, 4, 5, 4),
-(4, '201810921', 10020, 5, 4, 4, 4, 5, 4, 3, 4, 4, 3, 5, 4, 4, 4, 5, 3, 4, 3, 3, 5),
-(5, '201810931', 10020, 5, 4, 5, 5, 4, 4, 4, 3, 4, 3, 3, 4, 3, 5, 4, 4, 3, 4, 4, 5),
-(7, '201810921', 10010, 5, 4, 3, 2, 1, 2, 1, 1, 2, 3, 3, 4, 3, 2, 2, 2, 3, 2, 2, 3),
-(8, '201810921', 10019, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4, 3, 2, 3, 4);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `questionsection`
 --
 
@@ -2310,62 +2264,6 @@ INSERT INTO `questionsection` (`section`, `sectionname`) VALUES
 (3, 'Teaching for Independent Learning'),
 (4, 'Management of Learning'),
 (1, 'Commitment');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `second2021`
---
-
-DROP TABLE IF EXISTS `second2021`;
-CREATE TABLE IF NOT EXISTS `second2021` (
-  `eval_id` int(11) NOT NULL AUTO_INCREMENT,
-  `studentnumber` varchar(50) NOT NULL,
-  `prof_id` int(11) NOT NULL,
-  `score0` int(11) NOT NULL,
-  `score1` int(11) NOT NULL,
-  `score2` int(11) NOT NULL,
-  `score3` int(11) NOT NULL,
-  `score4` int(11) NOT NULL,
-  `score5` int(11) NOT NULL,
-  `score6` int(11) NOT NULL,
-  `score7` int(11) NOT NULL,
-  `score8` int(11) NOT NULL,
-  `score9` int(11) NOT NULL,
-  `score10` int(11) NOT NULL,
-  `score11` int(11) NOT NULL,
-  `score12` int(11) NOT NULL,
-  `score13` int(11) NOT NULL,
-  `score14` int(11) NOT NULL,
-  `score15` int(11) NOT NULL,
-  `score16` int(11) NOT NULL,
-  `score17` int(11) NOT NULL,
-  `score18` int(11) NOT NULL,
-  `score19` int(11) NOT NULL,
-  PRIMARY KEY (`eval_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `semyear`
---
-
-DROP TABLE IF EXISTS `semyear`;
-CREATE TABLE IF NOT EXISTS `semyear` (
-  `semester` varchar(100) NOT NULL,
-  `year` year(4) NOT NULL,
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `semyear`
---
-
-INSERT INTO `semyear` (`semester`, `year`, `id`) VALUES
-('first', 2021, 1),
-('second', 2021, 2);
 
 -- --------------------------------------------------------
 
@@ -2391,6 +2289,80 @@ INSERT INTO `tbl_admin` (`admin_id`, `ad_uname`, `ad_pass`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_eval`
+--
+
+DROP TABLE IF EXISTS `tbl_eval`;
+CREATE TABLE IF NOT EXISTS `tbl_eval` (
+  `eval_id` int(11) NOT NULL AUTO_INCREMENT,
+  `studentnumber` varchar(50) NOT NULL,
+  `prof_id` int(11) NOT NULL,
+  `period` int(1) DEFAULT NULL,
+  `score0` int(11) NOT NULL,
+  `score1` int(11) NOT NULL,
+  `score2` int(11) NOT NULL,
+  `score3` int(11) NOT NULL,
+  `score4` int(11) NOT NULL,
+  `score5` int(11) NOT NULL,
+  `score6` int(11) NOT NULL,
+  `score7` int(11) NOT NULL,
+  `score8` int(11) NOT NULL,
+  `score9` int(11) NOT NULL,
+  `score10` int(11) NOT NULL,
+  `score11` int(11) NOT NULL,
+  `score12` int(11) NOT NULL,
+  `score13` int(11) NOT NULL,
+  `score14` int(11) NOT NULL,
+  `score15` int(11) NOT NULL,
+  `score16` int(11) NOT NULL,
+  `score17` int(11) NOT NULL,
+  `score18` int(11) NOT NULL,
+  `score19` int(11) NOT NULL,
+  `score24` int(11) DEFAULT NULL,
+  `score23` int(11) DEFAULT NULL,
+  `score22` int(11) DEFAULT NULL,
+  `score21` int(11) DEFAULT NULL,
+  `score20` int(11) DEFAULT NULL,
+  `question1` varchar(100) NOT NULL,
+  `question2` varchar(1000) NOT NULL,
+  `question3` varchar(1000) NOT NULL,
+  `question4` varchar(1000) NOT NULL,
+  PRIMARY KEY (`eval_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tbl_eval`
+--
+
+INSERT INTO `tbl_eval` (`eval_id`, `studentnumber`, `prof_id`, `period`, `score0`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `score13`, `score14`, `score15`, `score16`, `score17`, `score18`, `score19`, `score24`, `score23`, `score22`, `score21`, `score20`, `question1`, `question2`, `question3`, `question4`) VALUES
+(1, '201810921', 10011, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, NULL, NULL, NULL, NULL, NULL, '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_period`
+--
+
+DROP TABLE IF EXISTS `tbl_period`;
+CREATE TABLE IF NOT EXISTS `tbl_period` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `semester` varchar(100) NOT NULL,
+  `year` year(4) NOT NULL,
+  `active` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_period`
+--
+
+INSERT INTO `tbl_period` (`id`, `semester`, `year`, `active`) VALUES
+(1, 'first', 2022, 1),
+(2, 'second', 2022, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_prof`
 --
 
@@ -2410,7 +2382,7 @@ CREATE TABLE IF NOT EXISTS `tbl_prof` (
 --
 
 INSERT INTO `tbl_prof` (`prof_id`, `prof_fname`, `prof_lname`, `prof_email`, `prof_col`, `prof_campus`) VALUES
-(10000, 'Teacher', '1', '', 'CAFENR', 'MAIN'),
+(10000, 'Teacher', '10', 'teacher10@cvsu.edu.ph', 'CAFENR', 'MAIN'),
 (10001, 'Teacher', '2', '', 'CAFENR', 'MAIN'),
 (10002, 'Teacher', '3', '', 'CAS', 'MAIN'),
 (10003, 'Teacher', '4', '', 'CAS', 'MAIN'),
@@ -2474,8 +2446,8 @@ CREATE TABLE IF NOT EXISTS `tbl_ques` (
 INSERT INTO `tbl_ques` (`ques_id`, `questions`, `section`) VALUES
 (1, 'Demonstrates sensitivity to students\' ability to attend and absorb content information.', 1),
 (2, 'Integrates sensitively his/her learning objectives with those of the students in a collaborative process.', 1),
-(3, 'Makes self available to students beyond time.', 1),
-(4, 'Regularly comes to class on time, well-groomed and well-prepared to complete assigned responsibilities.', 1),
+(3, 'Makes self available to students beyond times.', 1),
+(4, 'Regularly comes to class on time, well-groomed and well-prepared to complete assigned responsibilitieses.', 1),
 (5, 'Keeps accurate records of students\' performance and prompt submission of the same.', 1),
 (6, 'Demonstrates mastery of the subject matter (explain the subject matter without relying solely on the prescribed textbook).', 2),
 (7, 'Draws and share information on the state on the art of theory and practice his/her discipline.', 2),

@@ -8,6 +8,15 @@
 	}
 
 	if (isset($_POST['add'])) {
+		$sql = mysqli_query($connect, "SELECT * FROM tbl_ques");
+		$quesnum = mysqli_num_rows($sql);
+		$aftercol = ($quesnum-1);
+
+
+		for ($i=$quesnum; $i < $quesnum+5; $i++) { 
+			$sql1 = mysqli_query($connect, "ALTER TABLE tbl_eval ADD score$i int(11) AFTER score$aftercol");
+		}
+		
 		$sectionname = $_POST['section'];
 		$questions = array($_POST['q1'], $_POST['q2'], $_POST['q3'], $_POST['q4'], $_POST['q5']);
 
@@ -18,13 +27,6 @@
 		$row = mysqli_fetch_array($reslast);
 		$section = $row['last'];
 
-		$sql = mysqli_query($connect, "SELECT * FROM tbl_ques");
-		$quesnum = mysqli_num_rows($sql);
-
-
-		for ($i=$quesnum; $i < $quesnum+5; $i++) { 
-			$sql1 = mysqli_query($connect, "ALTER TABLE tbl_eval ADD score$i int(11)");
-		}
 
 		for ($i=0; $i < 5; $i++) { 
 			$sql2 = mysqli_query($connect, "INSERT INTO tbl_ques values (NULL, '$questions[$i]', $section)");

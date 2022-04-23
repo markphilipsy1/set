@@ -9,6 +9,11 @@
 	// $inst = mysqli_fetch_assoc($sql);
 
 	if (isset($_POST['sub'])) {
+		$choice = $_POST['choice'];
+		$strength = $_POST['strength'];
+		$suggestion = $_POST['suggestion'];
+		$overall = $_POST['overall'];
+
 		$prof_id = $_POST['prof'];
 		$sql2 = "SELECT * FROM tbl_ques";
 		$res2 = mysqli_query($connect, $sql2);
@@ -25,7 +30,7 @@
 
 		$evalscore = implode(", ", $ans);
 
-		$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore)";
+		$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore, $choice', '$strength', '$suggestion', '$overall')";
 		$res3 = mysqli_query($connect, $ins_ans);
 
 		if ($res3) {
@@ -125,23 +130,25 @@
 			<!-- Questions -->
 			<?php 
 				$section = mysqli_query($connect, "SELECT * FROM questionsection");
-				$count = mysqli_num_rows($section);
+				// $count = mysqli_num_rows($section);
 
-				for ($i=1; $i <= $count; $i++) {
-					$sql = "SELECT a.ques_id, a.questions, b.section, b.sectionname FROM tbl_ques a INNER JOIN questionsection b ON a.section = b.section WHERE a.section = $i";
+
+				// for ($i=1; $i <= $count; $i++) {
+				while ($sect = mysqli_fetch_assoc($section)) {
+					$sql = "SELECT a.ques_id, a.questions, b.section, b.sectionname FROM tbl_ques a INNER JOIN questionsection b ON a.section = b.section WHERE a.section = ".$sect['section'];
 					$res = mysqli_query($connect, $sql);
 
-					$sectionname1 = mysqli_query($connect, "SELECT * FROM questionsection WHERE section = $i");
+					$sectionname1 = mysqli_query($connect, "SELECT * FROM questionsection WHERE section = ".$sect['section']);
 
 					?>
 
 					<div class="card">
 						<div class="card-header bg-success text-white">
 							<?php 
-								if ($sectionname = mysqli_fetch_assoc($sectionname1)) {
-									echo "<strong>".$sectionname['sectionname']."</strong>";
-									// echo "<button class='btn btn-default float-right' name='delete' type='submit' onclick='tanggal(".$row['section'].")'><span class='fas fa-window-close'></span></button>";
-								}
+								// while ($sectionname = mysqli_fetch_assoc($sectionname1)) {
+									echo "<strong>".$sect['sectionname']."</strong>";
+									echo "<button class='btn btn-default float-right' name='delete' type='submit' onclick='tanggal(".$sect['section'].")'><span class='fas fa-window-close'></span></button>";
+								// }
 							 ?>
 						</div>
 						<ul class="list-group list-group-flush">
@@ -149,7 +156,9 @@
 								while ($ques = mysqli_fetch_assoc($res)) {
 
 									echo "<li class='list-group-item'>";
-									echo "<textarea row='3' style='resize:none;' class='form-control-plaintext h6'  id='q" .$ques['ques_id']. "' value='ehe' readonly>" .$ques['questions']. "</textarea>";
+									echo "<textarea row='3' style='resize:none;' class='form-control-plaintext h6'  id='q" .$ques['ques_id']. "' value='ehe' readonly>" .$ques['questions']. "</textarea>
+										<button class='btn btn-primary float-right' onclick='save(".$ques['ques_id'].")'><span class='fa fa-save'></span></button>
+										<button class='btn btn-light float-right' onclick='edit(".$ques['ques_id'].")'><span class='fa fa-edit'></span></button>";
 									?>
 									<div class="row text-center">
 										<div class="col">Outstanding</div>
@@ -170,6 +179,38 @@
 					<?php
 				}
 			 ?>
+			 <hr>
+			 <div class="card">
+			 	<div class="card-header bg-success text-white"><strong>Suggestions for Improvement</strong></div>
+			 	<ul class="list-group list-group-flush">
+			 		<li class="list-group-item">
+			 			The course should:<br><br>
+			 			<div class="custom-control custom-radio">
+			 				<input type="radio" name="choice" id="a" class="custom-control-input" value="Require less" required>
+			 				<label for="a" class="custom-control-label">a. Require less task for the credit</label>
+			 			</div>
+			 			<div class="custom-control custom-radio">
+			 				<input type="radio" name="choice" id="b" class="custom-control-input" value="Require more" required>
+			 				<label for="b" class="custom-control-label">b. Require more task for the credit</label>
+			 			</div>
+			 		</li>
+			 		<li class="list-group-item">
+			 			Strenghts of the faculty
+			 			<textarea row=5 style="resize: none;" name="strength" class="form-control" maxlength="1000" required></textarea>
+			 			<p class="text-right"><small class="text-muted">Maximum characters of 1000</small></p>
+			 		</li>
+			 		<li class="list-group-item">
+			 			Other suggestions for improvement
+			 			<textarea row=5 style="resize: none;" name="suggestion" class="form-control" maxlength="1000" required></textarea>
+			 			<p class="text-right"><small class="text-muted">Maximum characters of 1000</small></p>
+			 		</li>
+			 		<li class="list-group-item">
+			 			Overall impression of the faculty
+			 			<textarea row=5 style="resize: none;" name="overall" class="form-control" maxlength="1000" required></textarea>
+			 			<p class="text-right"><small class="text-muted">Maximum characters of 1000</small></p>
+			 		</li>
+			 	</ul>
+			 </div>
 
 	 		<hr>
 			<br>
