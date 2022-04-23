@@ -94,6 +94,17 @@
   				</tbody>
   			</table>
   			<?php 
+  				$sql = mysqli_query($connect, "SELECT question1, question2, question3, question4 FROM tbl_eval WHERE prof_id = $prof_id AND period = (SELECT id FROM tbl_period WHERE active = 1)");
+
+  				while ($open = mysqli_fetch_array($sql)) {
+  					echo "<div class='card'><div class='card-body'>";
+  					echo "<strong>The course should: </strong>".$open['question1']."<br>";
+  					echo "<strong>Strengths of the faculty: </strong>".$open['question2']."<br>";
+  					echo "<strong>Suggestions for improvement: </strong>".$open['question3']."<br>";
+  					echo "<strong>Impressions of the faculty: </strong>".$open['question4']."<br>";
+  					echo "</div></div>";
+  				}
+
   				if ($row_cnt == 0) {
   					echo "<center><small>Nothing to show here.</small></center>";
   				}

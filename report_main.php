@@ -61,6 +61,7 @@
  				echo "<td>".$row['samp_size']."</td>";
  				thescore($row['prof_id']);
 			}
+			
 			function thescore($prof){
 				global $connect;
 				global $college;
