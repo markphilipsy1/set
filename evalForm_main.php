@@ -30,7 +30,7 @@
 			$evalscore = implode(", ", $ans);
 
 
-			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore, $choice', '$strength', '$suggestion', '$overall')";
+			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore, '$choice', '$strength', '$suggestion', '$overall')";
 			$res3 = mysqli_query($connect, $ins_ans);
 			
 			if ($res3) {
