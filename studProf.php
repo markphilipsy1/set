@@ -79,7 +79,7 @@
   					<?php 
 			  			while ($sub = mysqli_fetch_array($res1)) {
 			  				if ($sub['instructor'] != '-') {
-				  				$sql_check = "SELECT * FROM tbl_eval a INNER JOIN tbl_period b ON a.period = b.id WHERE studentnumber = ".$_SESSION['studentnumber']." AND prof_id = ".$sub['instructor']." AND b.id = (SELECT id FROM tbl_period WHERE active = 1)";
+				  				$sql_check = "SELECT * FROM tbl_eval a INNER JOIN tbl_period b ON a.period = b.id WHERE studentnumber = ".$_SESSION['studentnumber']." AND prof_id = ".$sub['instructor']." AND b.id = (SELECT MAX(id) FROM tbl_period)";
 				  				$res_check = mysqli_query($connect, $sql_check);
 				  				$row_check = mysqli_fetch_array($res_check);  					
 			  				}
