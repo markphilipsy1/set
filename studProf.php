@@ -12,7 +12,7 @@
 	$res = mysqli_query($connect, $sql);
 	$stud = mysqli_fetch_assoc($res);
 
-  	$sql1 = "SELECT a.studentNumber, b.schedcode, c.subjectCode, c.instructor, d.subjectTitle, concat(e.prof_fname,' ', e.prof_lname) as prof_name from enrollstudentinformation a inner join enrollsubjectenrolled b on a.studentnumber = b.studentnumber inner join enrollscheduletbl c on b.schedcode = c.schedcode inner join enrollsubjectstbl d on c.subjectCode = d.subjectcode left join tbl_prof e on c.instructor = e.prof_id WHERE a.studentnumber = ".$_SESSION['studentnumber'];
+  	$sql1 = "SELECT a.studentNumber, b.schedcode, c.subjectCode, c.instructor, d.subjectTitle, concat(e.prof_fname,' ', e.prof_lname) as prof_name from enrollstudentinformation a inner join enrollsubjectenrolled b on a.studentnumber = b.studentnumber inner join enrollscheduletbl c on b.schedcode = c.schedcode inner join enrollsubjectstbl d on c.subjectCode = d.subjectcode left join tbl_prof e on c.instructor = e.prof_id WHERE c.semester = (SELECT semester FROM tbl_period WHERE id = (SELECT MAX(id) FROM tbl_period)) AND c.schoolyear = (SELECT year FROM tbl_period WHERE id = (SELECT MAX(id) FROM tbl_period)) AND a.studentnumber = ".$_SESSION['studentnumber'];
   	$res1 = mysqli_query($connect, $sql1);
 ?>
 <!DOCTYPE html>

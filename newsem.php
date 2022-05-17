@@ -11,16 +11,17 @@
   if (isset($_POST['newsem'])) {
     $newsem = $_POST['sem'];
     $newyear = $_POST['year'];
+    // $nxtyr = $newyear + 1;
+    // $schyr = "$newyear - $"
 
     $sql = mysqli_query($connect, "SELECT * FROM tbl_period WHERE semester = '$newsem' AND year = $newyear");
     $row = mysqli_num_rows($sql);
-    
     if ($row != 0) {
       echo "<script>alert('Semester and Year already exist!')
             window.location.href = 'newsem.php'</script>"; 
     } else {
       $sql = mysqli_query($connect, "UPDATE tbl_period SET active = 0 WHERE id = (SELECT MAX(id) FROM tbl_period)");
-      $sql1 = mysqli_query($connect, "INSERT INTO tbl_period values (NULL, '$newsem', $newyear, 1)");
+      $sql1 = mysqli_query($connect, "INSERT INTO tbl_period values (NULL, '$newsem', '$newyear', 1)");
       echo "<script>alert('New semester created!')
             window.location.href = 'prof.php'</script>";
     }
@@ -58,13 +59,20 @@
           <label for="sem">SEMESTER</label>
           <div class="col-sm-2">
               <select id="sem" name="sem" class="custom-select">
-                <option value="first">1st SEM</option>
-                <option value="second">2nd SEM</option>
+                <option value="FIRST">1st SEM</option>
+                <option value="SECOND">2nd SEM</option>
                 </select>
             </div>
           <label for="schyear">School Year</label>
             <div class="col-sm-2">
-              <input type="number" name="year" min="2020" max="2060" step="1" value="2021" class="form-control">
+              <!-- <input type="number" name="year" min="2020" max="2060" step="1" value="2021" class="form-control"> -->
+              <select name="year" class="custom-select">
+                <?php 
+                  for ($i=2020; $i < 2060; $i++) { 
+                    echo "<option value='".$i."-".($i+1)."'>".$i."-".($i+1)."</option>";
+                  }
+                 ?>
+              </select>
             </div>
               <button type="submit" class="btn btn-light" name="newsem" style="height: 30pt;">Add New Semester</button>
         </div>

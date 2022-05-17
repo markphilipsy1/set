@@ -186,11 +186,11 @@
 			 		<li class="list-group-item">
 			 			The course should:<br><br>
 			 			<div class="custom-control custom-radio">
-			 				<input type="radio" name="choice" id="a" class="custom-control-input" value="Require less" required>
+			 				<input type="radio" name="choice" id="a" class="custom-control-input" value="Require less task for the credit" required>
 			 				<label for="a" class="custom-control-label">a. Require less task for the credit</label>
 			 			</div>
 			 			<div class="custom-control custom-radio">
-			 				<input type="radio" name="choice" id="b" class="custom-control-input" value="Require more" required>
+			 				<input type="radio" name="choice" id="b" class="custom-control-input" value="Require more task for the credit" required>
 			 				<label for="b" class="custom-control-label">b. Require more task for the credit</label>
 			 			</div>
 			 		</li>

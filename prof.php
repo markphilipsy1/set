@@ -15,7 +15,7 @@
 		$schyear = $_POST['schyear'];
 
 		$sql = mysqli_query($connect, "UPDATE tbl_period SET active = 0 WHERE active = 1");
-		$sql = mysqli_query($connect, "UPDATE tbl_period SET active = 1 WHERE semester = '$sem' AND year = $schyear");
+		$sql = mysqli_query($connect, "UPDATE tbl_period SET active = 1 WHERE semester = '$sem' AND year = '$schyear'");
 		header("Refresh:0");
 		// $_SESSION['semyr'] = $sem.$schyear;
 	}
@@ -109,8 +109,8 @@
 		  			<label for="sem">SEMESTER</label>
 		  			<div class="col-sm-2">
 						    <select id="sem" name="sem" class="custom-select">
-						    	<option value="first">1st SEM</option>
-						    	<option value="second">2nd SEM</option>
+						    	<option value="FIRST">1st SEM</option>
+						    	<option value="SECOND">2nd SEM</option>
 					      	</select>
 					    </div>
 		  			<label for="schyear">School Year</label>
@@ -119,7 +119,7 @@
 							   	<?php 
 							   		$sql = mysqli_query($connect, "SELECT DISTINCT(year) FROM tbl_period");
 							   		while ($year = mysqli_fetch_array($sql)) {
-							   			echo "<option value='".$year['year']."'>".$year['year']."-".($year['year']+1)."</option>";
+							   			echo "<option value='".$year['year']."'>".$year['year']."</option>";
 							   		}
 
 							   	 ?>

@@ -55,7 +55,12 @@
       	</ul>
   	</nav>
   	<div class="container">
-  		<p class="h5"><?php echo $campus; ?></p>
+  		<p class="h5">
+  		<?php 
+  			$evalnumsql = mysqli_query($connect, "SELECT COUNT(*) as evalnum FROM tbl_eval a INNER JOIN tbl_prof b ON a.prof_id = b.prof_id INNER JOIN tbl_period c ON a.period = c.id WHERE b.prof_campus = '$campus' AND c.id = (SELECT id FROM tbl_period WHERE active = 1)");
+  			$evalnum = mysqli_fetch_assoc($evalnumsql);
+
+  			echo $campus."<small style='float: right;'> Number of Evaluations Submitted: ".$evalnum['evalnum']."</small>"; ?></p>
   		<hr>
   		<div class='text-center'>
   			<div class='row'>
@@ -70,7 +75,7 @@
   				</div>
   			</div>
   		<?php 
-	  		$sql = "SELECT prof_id, CONCAT(prof_fname , ' ', prof_lname) AS prof_name, prof_col FROM tbl_prof WHERE prof_campus = '$campus' ORDER BY prof_lname;";
+	  		$sql = "SELECT a.prof_id, CONCAT(a.prof_fname , ' ', a.prof_lname) AS prof_name, a.prof_col FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_campus = '$campus' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) ORDER BY prof_fname";
 	  		$res = mysqli_query($connect, $sql);
 	  		while ($prof = mysqli_fetch_assoc($res)) {
 	  			echo "<div class='row'>";
@@ -116,7 +121,7 @@
 			    <div class="form-group col-sm-6">
 			      	<label for="college">College</label>
 				    <select id="college" name="email" class="form-control">
-				    	<option value="-" selected>Select College...</option>
+				    	<option value="-" disabled selected>Select College...</option>
 				    	<option value="CAFENR">CAFENR</option>
 				    	<option value="CAS">CAS</option>
 				    	<option value="CCJ">CCJ</option>
@@ -131,7 +136,8 @@
 			    <div class="form-group col-sm-6">
 			      	<label for="campus">Campus</label>
 				    <select id="campus" name="campus" class="form-control">
-				    	<option value="-" selected>Select Campus...</option>
+				    	<option value="-" disabled selected>Select Campus...</option>
+				        <option value="MAIN">MAIN</option>
 				        <option value="BACOOR">BACOOR</option>
 				        <option value="CARMONA">CARMONA</option>
 				        <option value="CAVITE CITY">CAVITE CITY</option>
