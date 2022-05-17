@@ -14,7 +14,7 @@
     // $nxtyr = $newyear + 1;
     // $schyr = "$newyear - $"
 
-    $sql = mysqli_query($connect, "SELECT * FROM tbl_period WHERE semester = '$newsem' AND year = $newyear");
+    $sql = mysqli_query($connect, "SELECT * FROM tbl_period WHERE semester = '$newsem' AND year = '$newyear'");
     $row = mysqli_num_rows($sql);
     if ($row != 0) {
       echo "<script>alert('Semester and Year already exist!')
@@ -68,7 +68,7 @@
               <!-- <input type="number" name="year" min="2020" max="2060" step="1" value="2021" class="form-control"> -->
               <select name="year" class="custom-select">
                 <?php 
-                  for ($i=2020; $i < 2060; $i++) { 
+                  for ($i=2021; $i < 2060; $i++) { 
                     echo "<option value='".$i."-".($i+1)."'>".$i."-".($i+1)."</option>";
                   }
                  ?>
