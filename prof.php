@@ -29,9 +29,15 @@
 		$eval_cnt = 0;
 	}
 
-	$num_prof = "SELECT * FROM tbl_prof";
+	$num_prof = "SELECT * FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1)";
 	$res1 = mysqli_query($connect, $num_prof);
-	$prof_cnt = mysqli_num_rows($res1);
+	// $prof_cnt = mysqli_num_rows($res1);
+
+	if ($res1) {
+		$prof_cnt = mysqli_num_rows($res1);
+	} else {
+		$prof_cnt = 0;
+	}
 
 	$coll = array('CAFENR', 'CAS', 'CCJ', 'CED', 'CEIT', 'CEMDS', 'CON', 'CSPEAR', 'CVMBS');
 	for ($i=0; $i < count($coll); $i++) { 

@@ -98,7 +98,8 @@
   	<div class="container">
   	 	<hr>
 	  	<a href="prof.php"><button class="btn btn-default"><span class="fas fa-chevron-left"></span> Back to Colleges</button></a>
-	  	<br>
+  	</div>
+	  	<!-- <br>
 	  	<br>
 	  	<br>
 	  	<p class="h6">Add Faculty Staff?</p>
@@ -153,8 +154,7 @@
 			    </div>
 			</div>
 			<button type="submit" name="add" class="btn btn-success">ADD</button>
-		</form>
-  	</div>
+		</form> -->
 
 	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>

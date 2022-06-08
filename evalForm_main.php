@@ -203,17 +203,17 @@
 			 		</li>
 			 		<li class="list-group-item">
 			 			Strenghts of the faculty
-			 			<textarea row=5 style="resize: none;" name="strength" class="form-control" maxlength="1000" required></textarea>
+			 			<textarea row=5 style="resize: none;" name="strength" class="form-control" maxlength="1000"></textarea>
 			 			<p class="text-right"><small class="text-muted">Maximum characters of 1000</small></p>
 			 		</li>
 			 		<li class="list-group-item">
 			 			Other suggestions for improvement
-			 			<textarea row=5 style="resize: none;" name="suggestion" class="form-control" maxlength="1000" required></textarea>
+			 			<textarea row=5 style="resize: none;" name="suggestion" class="form-control" maxlength="1000"></textarea>
 			 			<p class="text-right"><small class="text-muted">Maximum characters of 1000</small></p>
 			 		</li>
 			 		<li class="list-group-item">
 			 			Overall impression of the faculty
-			 			<textarea row=5 style="resize: none;" name="overall" class="form-control" maxlength="1000" required></textarea>
+			 			<textarea row=5 style="resize: none;" name="overall" class="form-control" maxlength="1000"></textarea>
 			 			<p class="text-right"><small class="text-muted">Maximum characters of 1000</small></p>
 			 		</li>
 			 	</ul>

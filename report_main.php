@@ -38,16 +38,19 @@
       	</ul>
   	</nav>
   	<div class="container">
+  		<div class="float-right"><button class="btn btn-success" onclick="tableToCSV();"><span class="fas fa-download"></span> Download as CSV</button></div>
+  		<br>
+  		<br>
   		<table class="table table-sm text-center">
-  			<tr class="text-center">
-  				<td rowspan="2" scope="col" class="align-middle"><strong>Name of Faculty</strong></td>
-  				<td rowspan="2" scope="col" class="align-middle"><strong>Sample Size</strong></td>
+  			<tr class="text-center" style="font-weight: bold;">
+  				<td rowspan="2" scope="col" class="align-middle">Name of Faculty</td>
+  				<td rowspan="2" scope="col" class="align-middle">Sample Size</td>
   				<?php 
   					while ($row = mysqli_fetch_array($sql)) {
-  						echo "<td rowspan='2' class='align-middle'><strong>".$row['sectionname']."</td>";
+  						echo "<td rowspan='2' class='align-middle'>".$row['sectionname']."</td>";
   					}
   				 ?>
-  				<td colspan="2" scope="col"><strong>Rating</strong></td>
+  				<td colspan="2" scope="col">Rating</td>
   			</tr>
   			<tr class="text-center">
   				<td>Numerical</td>
@@ -140,5 +143,49 @@
   	</div>	
 	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+        function tableToCSV() {
+ 
+            var csv_data = [];
+ 
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+ 
+                var cols = rows[i].querySelectorAll('td,th');
+ 
+                var csvrow = [];
+                for (var j = 0; j < cols.length; j++) {
+ 
+                    csvrow.push(cols[j].innerHTML);
+                }
+ 
+                csv_data.push(csvrow.join(","));
+            }
+ 
+            csv_data = csv_data.join('\n');
+ 
+            downloadCSVFile(csv_data);
+ 
+        }
+ 
+        function downloadCSVFile(csv_data) {
+ 
+            CSVFile = new Blob([csv_data], {
+                type: "text/csv"
+            });
+ 
+            var temp_link = document.createElement('a');
+ 
+            temp_link.download = "Report.csv";
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+ 
+            temp_link.style.display = "none";
+            document.body.appendChild(temp_link);
+ 
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+    </script>
 </body>
 </html>

@@ -9,21 +9,21 @@
 
 	$college = $_GET['college'];
 
-	if (isset($_POST['add'])) {
-		$fname = $_POST['fname'];
-		$lname = $_POST['lname'];
-		$email = $_POST['email'];
-		$college = $_POST['college'];
-		$campus = $_POST['campus'];
+	// if (isset($_POST['add'])) {
+	// 	$fname = $_POST['fname'];
+	// 	$lname = $_POST['lname'];
+	// 	$email = $_POST['email'];
+	// 	$college = $_POST['college'];
+	// 	$campus = $_POST['campus'];
 
-		$sql1 = "INSERT INTO tbl_prof values (NULL, '".$fname."', '".$lname."', '".$email."', '".$college."', '".$campus."')";
-		$res1 = mysqli_query($connect, $sql1);
+	// 	$sql1 = "INSERT INTO tbl_prof values (NULL, '".$fname."', '".$lname."', '".$email."', '".$college."', '".$campus."')";
+	// 	$res1 = mysqli_query($connect, $sql1);
 
-		if ($res1) {
-			echo "<script>alert('Successfully added new teacher.')
-				window.history.back();</script>";
-		}
-	}
+	// 	if ($res1) {
+	// 		echo "<script>alert('Successfully added new teacher.')
+	// 			window.history.back();</script>";
+	// 	}
+	// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,7 +84,7 @@
 	  			<div class='col-sm-4'>
 	  				<a href="view.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-eye"></span></a>
 	  				<a href="edit.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-edit"></span></a>
-	  				<a href="delete.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-archive"></span></a>
+	  				<!-- <a href="delete.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-archive"></span></a> -->
 	  			</div>
 	  		</div>
 	  		<?php 
@@ -98,7 +98,8 @@
   	<div class="container">
   	 	<hr>
 	  	<a href="prof.php"><button class="btn btn-default"><span class="fas fa-chevron-left"></span> Back to Colleges</button></a>
-	  	<br>
+  	</div> 
+	  	<!-- <br>
 	  	<br>
 	  	<p class="h6">Add Faculty Staff?</p>
 	  	<form method="POST">
@@ -152,8 +153,7 @@
 			    </div>
 			</div>
 			<button type="submit" name="add" class="btn btn-success">ADD</button>
-		</form>
-  	</div>
+		</form> -->
 
 	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
