@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 03, 2022 at 07:18 AM
+-- Generation Time: Jun 11, 2022 at 09:36 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -2274,8 +2274,8 @@ INSERT INTO `questionsection` (`section`, `sectionname`) VALUES
 DROP TABLE IF EXISTS `tbl_admin`;
 CREATE TABLE IF NOT EXISTS `tbl_admin` (
   `admin_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ad_uname` varchar(255) NOT NULL,
-  `ad_pass` varchar(255) NOT NULL,
+  `ad_uname` varchar(50) NOT NULL,
+  `ad_pass` varchar(50) NOT NULL,
   PRIMARY KEY (`admin_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1002 DEFAULT CHARSET=utf8;
 
@@ -2319,9 +2319,9 @@ CREATE TABLE IF NOT EXISTS `tbl_eval` (
   `score18` int(11) NOT NULL,
   `score19` int(11) NOT NULL,
   `question1` varchar(100) NOT NULL,
-  `question2` varchar(1000) NOT NULL,
-  `question3` varchar(1000) NOT NULL,
-  `question4` varchar(1000) NOT NULL,
+  `question2` varchar(1000) NOT NULL DEFAULT '-',
+  `question3` varchar(1000) NOT NULL DEFAULT '-',
+  `question4` varchar(1000) NOT NULL DEFAULT '-',
   PRIMARY KEY (`eval_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -2330,7 +2330,7 @@ CREATE TABLE IF NOT EXISTS `tbl_eval` (
 --
 
 INSERT INTO `tbl_eval` (`eval_id`, `studentnumber`, `prof_id`, `period`, `score0`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `score13`, `score14`, `score15`, `score16`, `score17`, `score18`, `score19`, `question1`, `question2`, `question3`, `question4`) VALUES
-(1, '201810921', 10011, 1, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 4, 5, 'Require more task for the credit', 'Can make the lessons more easy to understand.', 'Can make the lesson not too fast and not too slow.', 'Very nice and easy to ask if there are questions in the lesson.');
+(1, '201810921', 10019, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 'Require more task for the credit', 'strength', 'suggestion', 'impression');
 
 -- --------------------------------------------------------
 
@@ -2345,15 +2345,14 @@ CREATE TABLE IF NOT EXISTS `tbl_period` (
   `year` varchar(15) NOT NULL,
   `active` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_period`
 --
 
 INSERT INTO `tbl_period` (`id`, `semester`, `year`, `active`) VALUES
-(1, 'FIRST', '2021-2022', 1),
-(2, 'SECOND', '2021-2022', 0);
+(1, 'FIRST', '2021-2022', 1);
 
 -- --------------------------------------------------------
 
@@ -2368,6 +2367,7 @@ CREATE TABLE IF NOT EXISTS `tbl_prof` (
   `prof_lname` varchar(255) CHARACTER SET utf8 NOT NULL,
   `prof_email` varchar(50) CHARACTER SET utf8 NOT NULL,
   `prof_col` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `prof_dept` varchar(50) NOT NULL DEFAULT '-',
   `prof_campus` varchar(50) NOT NULL DEFAULT 'MAIN',
   PRIMARY KEY (`prof_id`,`prof_email`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=10042 DEFAULT CHARSET=latin1;
@@ -2376,49 +2376,49 @@ CREATE TABLE IF NOT EXISTS `tbl_prof` (
 -- Dumping data for table `tbl_prof`
 --
 
-INSERT INTO `tbl_prof` (`prof_id`, `prof_fname`, `prof_lname`, `prof_email`, `prof_col`, `prof_campus`) VALUES
-(10000, 'Teacher', '10', 'teacher10@cvsu.edu.ph', 'CAFENR', 'MAIN'),
-(10001, 'Teacher', '2', '', 'CAFENR', 'MAIN'),
-(10002, 'Teacher', '3', '', 'CAS', 'MAIN'),
-(10003, 'Teacher', '4', '', 'CAS', 'MAIN'),
-(10004, 'Teacher', '5', '', 'CCJ', 'MAIN'),
-(10005, 'Teacher', '6', '', 'CCJ', 'MAIN'),
-(10006, 'Teacher', '7', '', 'CED', 'MAIN'),
-(10007, 'Teacher', '8', '', 'CED', 'MAIN'),
-(10008, 'Teacher', '9', '', 'CEMDS', 'MAIN'),
-(10009, 'Teacher', '10', '', 'CEMDS', 'MAIN'),
-(10010, 'Joy', 'Peji', 'jmpeji@cvsu.edu.ph', 'CEIT', 'MAIN'),
-(10011, 'Gladys', 'Perey', 'ggperey@cvsu.edu.ph', 'CEIT', 'MAIN'),
-(10012, 'Teacher', '13', '', 'CON', 'MAIN'),
-(10013, 'Teacher', '14', '', 'CON', 'MAIN'),
-(10014, 'Teacher', '15', '', 'CSPEAR', 'MAIN'),
-(10015, 'Teacher', '16', '', 'CSPEAR', 'MAIN'),
-(10016, 'Teacher', '17', '', 'CVMBS', 'MAIN'),
-(10017, 'Teacher', '18', '', 'CVMBS', 'MAIN'),
-(10018, 'Charles', 'Mendoza', 'charles.mendoza@cvsu.edu.ph', 'CEIT', 'MAIN'),
-(10019, 'Kelvin Gessell', 'Lucas', 'kplucas@cvsu.edu.ph', 'CEIT', 'MAIN'),
-(10020, 'Teacher', '20', '-', '-', 'BACOOR'),
-(10021, 'Teacher', '21', '-', '-', 'BACOOR'),
-(10022, 'Teacher', '22', '-', '-', 'CARMONA'),
-(10023, 'Teacher', '23', '-', '-', 'CARMONA'),
-(10024, 'Teacher', '24', '-', '-', 'CAVITE CITY'),
-(10025, 'Teacher', '25', '-', '-', 'CAVITE CITY'),
-(10026, 'Teacher', '26', '-', '-', 'GENTRI'),
-(10027, 'Teacher', '27', '-', '-', 'GENTRI'),
-(10028, 'Teacher', '28', '-', '-', 'IMUS'),
-(10029, 'Teacher', '29', '-', '-', 'IMUS'),
-(10030, 'Teacher', '30', '-', '-', 'MARAGONDON'),
-(10031, 'Teacher', '31', '-', '-', 'MARAGONDON'),
-(10032, 'Teacher', '32', '-', '-', 'NAIC'),
-(10033, 'Teacher', '33', '-', '-', 'NAIC'),
-(10034, 'Teacher', '34', '-', '-', 'ROSARIO'),
-(10035, 'Teacher', '35', '-', '-', 'ROSARIO'),
-(10036, 'Teacher', '36', '-', '-', 'SILANG'),
-(10037, 'Teacher', '37', '-', '-', 'SILANG'),
-(10038, 'Teacher', '38', '-', '-', 'TANZA'),
-(10039, 'Teacher', '39', '-', '-', 'TANZA'),
-(10040, 'Teacher', '40', '-', '-', 'TMC'),
-(10041, 'Teacher', '41', '-', '-', 'TMC');
+INSERT INTO `tbl_prof` (`prof_id`, `prof_fname`, `prof_lname`, `prof_email`, `prof_col`, `prof_dept`, `prof_campus`) VALUES
+(10000, 'Teacher', '10', 'teacher10@cvsu.edu.ph', 'CAFENR', '-', 'MAIN'),
+(10001, 'Teacher', '2', '', 'CAFENR', '-', 'MAIN'),
+(10002, 'Teacher', '3', '', 'CAS', '-', 'MAIN'),
+(10003, 'Teacher', '4', '', 'CAS', '-', 'MAIN'),
+(10004, 'Teacher', '5', '', 'CCJ', '-', 'MAIN'),
+(10005, 'Teacher', '6', '', 'CCJ', '-', 'MAIN'),
+(10006, 'Teacher', '7', '', 'CED', '-', 'MAIN'),
+(10007, 'Teacher', '8', '', 'CED', '-', 'MAIN'),
+(10008, 'Teacher', '9', '', 'CEMDS', '-', 'MAIN'),
+(10009, 'Teacher', '10', '', 'CEMDS', '-', 'MAIN'),
+(10010, 'Joy', 'Peji', 'jmpeji@cvsu.edu.ph', 'CEIT', 'DIT', 'MAIN'),
+(10011, 'Gladys', 'Perey', 'ggperey@cvsu.edu.ph', 'CEIT', 'DIT', 'MAIN'),
+(10012, 'Teacher', '13', '', 'CON', '-', 'MAIN'),
+(10013, 'Teacher', '14', '', 'CON', '-', 'MAIN'),
+(10014, 'Teacher', '15', '', 'CSPEAR', '-', 'MAIN'),
+(10015, 'Teacher', '16', '', 'CSPEAR', '-', 'MAIN'),
+(10016, 'Teacher', '17', '', 'CVMBS', '-', 'MAIN'),
+(10017, 'Teacher', '18', '', 'CVMBS', '-', 'MAIN'),
+(10018, 'Charles', 'Mendoza', 'charles.mendoza@cvsu.edu.ph', 'CEIT', 'DIT', 'MAIN'),
+(10019, 'Kelvin Gessell', 'Lucas', 'kplucas@cvsu.edu.ph', 'CEIT', 'DCEE', 'MAIN'),
+(10020, 'Teacher', '20', '-', '-', '-', 'BACOOR'),
+(10021, 'Teacher', '21', '-', '-', '-', 'BACOOR'),
+(10022, 'Teacher', '22', '-', '-', '-', 'CARMONA'),
+(10023, 'Teacher', '23', '-', '-', '-', 'CARMONA'),
+(10024, 'Teacher', '24', '-', '-', '-', 'CAVITE CITY'),
+(10025, 'Teacher', '25', '-', '-', '-', 'CAVITE CITY'),
+(10026, 'Teacher', '26', '-', '-', '-', 'GENTRI'),
+(10027, 'Teacher', '27', '-', '-', '-', 'GENTRI'),
+(10028, 'Teacher', '28', '-', '-', '-', 'IMUS'),
+(10029, 'Teacher', '29', '-', '-', '-', 'IMUS'),
+(10030, 'Teacher', '30', '-', '-', '-', 'MARAGONDON'),
+(10031, 'Teacher', '31', '-', '-', '-', 'MARAGONDON'),
+(10032, 'Teacher', '32', '-', '-', '-', 'NAIC'),
+(10033, 'Teacher', '33', '-', '-', '-', 'NAIC'),
+(10034, 'Teacher', '34', '-', '-', '-', 'ROSARIO'),
+(10035, 'Teacher', '35', '-', '-', '-', 'ROSARIO'),
+(10036, 'Teacher', '36', '-', '-', '-', 'SILANG'),
+(10037, 'Teacher', '37', '-', '-', '-', 'SILANG'),
+(10038, 'Teacher', '38', '-', '-', '-', 'TANZA'),
+(10039, 'Teacher', '39', '-', '-', '-', 'TANZA'),
+(10040, 'Teacher', '40', '-', '-', '-', 'TMC'),
+(10041, 'Teacher', '41', '-', '-', '-', 'TMC');
 
 -- --------------------------------------------------------
 

@@ -7,14 +7,15 @@
 		$lname = $_POST['lname'];
 		$email = $_POST['email'];
 		$college = $_POST['college'];
+		$department = $_POST['department'];
 		$campus = $_POST['campus'];
 
-		$sql = "UPDATE tbl_prof SET prof_fname = '".$fname."', prof_lname = '".$lname."', prof_email = '".$email."', prof_col = '".$college."', prof_campus = '".$campus."' WHERE prof_id = ".$prof_id;
+		$sql = "UPDATE tbl_prof SET prof_fname = '".$fname."', prof_lname = '".$lname."', prof_email = '".$email."', prof_col = '".$college."', prof_dept = '".$department."', prof_campus = '".$campus."' WHERE prof_id = ".$prof_id;
 		$res = mysqli_query($connect, $sql);
 
 		if ($res) {
 			echo "<script>alert('Successfully updated!')
-				window.location.href='mainlist.php?college=$college';</script>";
+				window.location.href='main_list.php?college=$college';</script>";
 		}
 	}
  ?>
@@ -84,6 +85,19 @@
 				    <option value="CON">CON</option>
 				    <option value="CSPEAR">CSPEAR</option>
 				    <option value="CVMBS">CVMBS</option>
+			  	</select>
+			</div>
+			<div class="input-group mb-3">
+			  	<div class="input-group-prepend">
+			    	<label class="input-group-text bg-transparent" for="department"><strong>College Department</strong></label>
+			  	</div>
+			  	<select class="custom-select" id="department" name="department">
+				    <option selected value="<?php echo $prof['prof_dept'] ?>"><?php echo $prof['prof_dept'] ?></option>
+				    <option value="DAFE">DAFE</option>
+				    <option value="DCE">DCE</option>
+				    <option value="DCEE">DCEE</option>
+				    <option value="DIET">DIET</option>
+				    <option value="DIT">DIT</option>
 			  	</select>
 			</div>
 			<div class="input-group mb-3">

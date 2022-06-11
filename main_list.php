@@ -8,22 +8,6 @@
 	}
 
 	$college = $_GET['college'];
-
-	// if (isset($_POST['add'])) {
-	// 	$fname = $_POST['fname'];
-	// 	$lname = $_POST['lname'];
-	// 	$email = $_POST['email'];
-	// 	$college = $_POST['college'];
-	// 	$campus = $_POST['campus'];
-
-	// 	$sql1 = "INSERT INTO tbl_prof values (NULL, '".$fname."', '".$lname."', '".$email."', '".$college."', '".$campus."')";
-	// 	$res1 = mysqli_query($connect, $sql1);
-
-	// 	if ($res1) {
-	// 		echo "<script>alert('Successfully added new teacher.')
-	// 			window.history.back();</script>";
-	// 	}
-	// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,6 +46,24 @@
 
   			echo $college."<small style='float: right;'> Number of Evaluations Submitted: ".$evalnum['evalnum']."</small>"; ?></p>
   	<hr>
+  	<form method="POST" class="form-group">
+		  		<div class="row">
+		  			<label for="dept">College Department</label>
+					    <div class="col-sm-2">
+							<select id="dept" name="dept" class="custom-select">
+								<option value="all">ALL</option>
+							   	<?php 
+							   		$sql = mysqli_query($connect, "SELECT DISTINCT(prof_dept) FROM tbl_prof WHERE prof_col = '$college'");
+							   		while ($dept = mysqli_fetch_array($sql)) {
+							   			echo "<option value='".$dept['prof_dept']."'>".$dept['prof_dept']."</option>";
+							   		}
+
+							   	 ?>
+						    </select>
+					    </div>
+					    	<button type="submit" class="btn btn-light" name="changedept" style="height: 30pt;">Review  <span class="fas fa-search"></span></button>
+		  		</div>
+			</form>
   		<div class='text-center'>
   			<div class='row'>
   				<div class='col-sm-5'>
@@ -75,11 +77,19 @@
   				</div>
   			</div>
   		<?php 
-	  		$sql = "SELECT a.prof_id, CONCAT(a.prof_fname , ' ', a.prof_lname) AS prof_name, a.prof_col FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) ORDER BY prof_fname";
-	  		$res = mysqli_query($connect, $sql);
+	  		if (!isset($_POST['changedept']) || $_POST['dept'] == 'all') {
+	  			$sql = "SELECT a.prof_id, CONCAT(a.prof_lname , ', ', a.prof_fname) AS prof_name, a.prof_col, a.prof_dept FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) ORDER BY prof_lname";
+	  		$res = mysqli_query($connect, $sql);	
+	  		}
+			else {
+				$dept = $_POST['dept'];
+
+				$sql = "SELECT a.prof_id, CONCAT(a.prof_lname , ', ', a.prof_fname) AS prof_name, a.prof_col, a.prof_dept FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND prof_dept = '$dept' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) ORDER BY prof_lname";
+			  		$res = mysqli_query($connect, $sql);
+			}
 	  		while ($prof = mysqli_fetch_assoc($res)) {
 	  			echo "<div class='row'>";
-	  			echo "<div class='col-sm-5'>" .$prof['prof_name']. "</div><div class='col-sm-3'>" .$prof['prof_col']."</div>";
+	  			echo "<div class='col-sm-5'>" .$prof['prof_name']. "</div><div class='col-sm-3'>" .$prof['prof_col']."-" .$prof['prof_dept']. "</div>";
 	  			?>
 	  			<div class='col-sm-4'>
 	  				<a href="view.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-eye"></span></a>
@@ -99,62 +109,6 @@
   	 	<hr>
 	  	<a href="prof.php"><button class="btn btn-default"><span class="fas fa-chevron-left"></span> Back to Colleges</button></a>
   	</div> 
-	  	<!-- <br>
-	  	<br>
-	  	<p class="h6">Add Faculty Staff?</p>
-	  	<form method="POST">
-		  	<div class="form-row">
-			    <div class="form-group col-sm-6">
-			      	<label for="fname">First Name</label>
-			    	<input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
-			    </div>
-			    <div class="form-group col-sm-6">
-			      	<label for="lname">Last Name</label>
-			      	<input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
-			    </div>
-			</div>
-			<div class="form-group">
-				<label for="email">CvSU Email</label>
-			    <input type="email" class="form-control" id="email" name="email" placeholder="CvSU Email">
-			</div>
-			<div class="form-row">
-			    <div class="form-group col-sm-6">
-			      	<label for="college">College</label>
-				    <select id="college" name="college" class="form-control">
-				    	<option value="-" disabled selected>Select College...</option>
-				    	<option value="CAFENR">CAFENR</option>
-				    	<option value="CAS">CAS</option>
-				    	<option value="CCJ">CCJ</option>
-				    	<option value="CED">CED</option>
-				    	<option value="CEIT">CEIT</option>
-				    	<option value="CEMDS">CEMDS</option>
-				    	<option value="CON">CON</option>
-				    	<option value="CSPEAR">CSPEAR</option>
-				    	<option value="CVMBS">CVMBS</option>
-			      	</select>
-			    </div>
-			    <div class="form-group col-sm-6">
-			      	<label for="campus">Campus</label>
-				    <select id="campus" name="campus" class="form-control">
-				    	<option value="-" disabled selected>Select Campus...</option>
-				        <option value="MAIN">MAIN</option>
-				        <option value="BACOOR">BACOOR</option>
-				        <option value="CARMONA">CARMONA</option>
-				        <option value="CAVITE CITY">CAVITE CITY</option>
-				        <option value="GENTRI">GENERAL TRIAS</option>
-				        <option value="IMUS">IMUS</option>
-				        <option value="MARAGONDON">MARAGONDON</option>
-				        <option value="NAIC">NAIC</option>
-				        <option value="ROSARIO">ROSARIO</option>
-				        <option value="SILANG">SILANG</option>
-				        <option value="TANZA">TANZA</option>
-				        <option value="TMC">TRECE MARTIRES CITY</option>
-			      	</select>
-			    </div>
-			</div>
-			<button type="submit" name="add" class="btn btn-success">ADD</button>
-		</form> -->
-
 	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </body>
