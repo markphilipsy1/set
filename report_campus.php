@@ -82,7 +82,8 @@
   	</nav>
   	<br>
   	<div class="container">
-  		<div class="float-right"><button class="btn btn-success" onclick="tableToCSV();"><a href="report_main(test).php?prof_campus=<?php echo $campus ?>&tocsv=true" class="text-decoration-none text-white"><span class="fas fa-download"></span> Download as CSV</a></button></div>
+  		<div class="float-right"><button class="btn btn-success" onclick="tableToCSV();"><span class="fas fa-download"></span> Download Scores as CSV</button></div>
+  		<div class="float-right"><button class="btn btn-success"><a href="report_main(test).php?prof_col=<?php echo $college ?>&tocsv=true" class="text-decoration-none text-white"><span class="fas fa-download"></span> Download Comments as CSV</a></button></div>
   		<br>
   		<br>
   		<table class="table table-sm text-center" id="reports">
