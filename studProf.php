@@ -79,7 +79,7 @@
   					<?php 
 			  			while ($sub = mysqli_fetch_array($res1)) {
 			  				if ($sub['instructor'] != '-') {
-				  				$sql_check = "SELECT * FROM tbl_eval a INNER JOIN tbl_period b ON a.period = b.id WHERE studentnumber = ".$_SESSION['studentnumber']." AND prof_id = ".$sub['instructor']." AND b.id = (SELECT MAX(id) FROM tbl_period)";
+				  				$sql_check = "SELECT * FROM tbl_eval a INNER JOIN tbl_period b ON a.period = b.id WHERE studentnumber = ".$_SESSION['studentnumber']." AND prof_id = ".$sub['instructor']." AND schedcode = ".$sub['schedcode']." AND b.id = (SELECT MAX(id) FROM tbl_period)";
 				  				$res_check = mysqli_query($connect, $sql_check);
 				  				$row_check = mysqli_fetch_array($res_check);  					
 			  				}
@@ -91,7 +91,7 @@
 			  				echo "<td>".$sub['prof_name']."</td>";
 
 			  				?>
-			  				<td class="text-center"><a href="evalForm_main.php?prof_id=<?php echo $sub['instructor'];?>"><button class="btn btn-light" id="<?php echo $sub['instructor'] ?>" name="<?php echo $sub['subjectCode'] ?>"><span class="fa fa-edit" id="<?php echo $sub['instructor'] ?>"></span></button></a></td>
+			  				<td class="text-center"><a href="evalForm_main.php?prof_id=<?php echo $sub['instructor'];?>&schedcode=<?php echo $sub['schedcode'] ?>"><button class="btn btn-light" id="<?php echo $sub['instructor'] ?>" name="<?php echo $sub['subjectCode'] ?>"><span class="fa fa-edit" id="<?php echo $sub['instructor'] ?>"></span></button></a></td>
 			  		<?php
 				  			if ($row_check) {
 				  				echo "<script>

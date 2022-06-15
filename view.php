@@ -70,11 +70,10 @@
 			  			$row_cnt = mysqli_num_rows($res);
 				  		$number = 1;
 
-				  		$forran = mysqli_query($connect, "SELECT * FROM tbl_ques");
-				  		$cntr = mysqli_num_rows($forran);
-				  		$counter = range(0, $cntr, 5);
+						$forran = mysqli_query($connect, "SELECT * FROM tbl_ques");
+						$cntr = mysqli_num_rows($forran);
+						$counter = range(0, $cntr, 5);
 
-			  			if ($row_cnt != 0) {
 				  			while ($score = mysqli_fetch_assoc($res)) {
 				  				echo "<tr>";
 				  				echo "<td><strong>".$number."</strong></td>";
@@ -85,11 +84,11 @@
 					  				for ($i=$min; $i < $max; $i++) { 
 					  					echo "<td>".$score['score'.$i.'']."</td>";
 					  				}
+				  				echo $counter[$a];
 				  				}
 				  				echo "</tr>";
 				  				$number++;
 				  			}
-			  			}
 			  		?>
   				</tbody>
   			</table>

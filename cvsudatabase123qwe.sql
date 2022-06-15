@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 11, 2022 at 09:36 AM
+-- Generation Time: Jun 15, 2022 at 12:46 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -2297,6 +2297,7 @@ CREATE TABLE IF NOT EXISTS `tbl_eval` (
   `eval_id` int(11) NOT NULL AUTO_INCREMENT,
   `studentnumber` varchar(50) NOT NULL,
   `prof_id` int(11) NOT NULL,
+  `schedcode` varchar(50) NOT NULL,
   `period` int(1) DEFAULT NULL,
   `score0` int(11) NOT NULL,
   `score1` int(11) NOT NULL,
@@ -2323,14 +2324,7 @@ CREATE TABLE IF NOT EXISTS `tbl_eval` (
   `question3` varchar(1000) NOT NULL DEFAULT '-',
   `question4` varchar(1000) NOT NULL DEFAULT '-',
   PRIMARY KEY (`eval_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `tbl_eval`
---
-
-INSERT INTO `tbl_eval` (`eval_id`, `studentnumber`, `prof_id`, `period`, `score0`, `score1`, `score2`, `score3`, `score4`, `score5`, `score6`, `score7`, `score8`, `score9`, `score10`, `score11`, `score12`, `score13`, `score14`, `score15`, `score16`, `score17`, `score18`, `score19`, `question1`, `question2`, `question3`, `question4`) VALUES
-(1, '201810921', 10019, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 'Require more task for the credit', 'strength', 'suggestion', 'impression');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

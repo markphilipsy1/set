@@ -43,19 +43,17 @@
   		<br>
   		<table class="table table-sm text-center">
   			<tr class="text-center" style="font-weight: bold;">
-  				<td rowspan="2" scope="col" class="align-middle">Name of Faculty</td>
-  				<td rowspan="2" scope="col" class="align-middle">Sample Size</td>
+  				<td scope="col" class="align-middle">Name of Faculty</td>
+  				<td scope="col" class="align-middle">Sample Size</td>
   				<?php 
   					while ($row = mysqli_fetch_array($sql)) {
-  						echo "<td rowspan='2' class='align-middle'>".$row['sectionname']."</td>";
+  						echo "<td class='align-middle'>".$row['sectionname']."</td>";
   					}
   				 ?>
-  				<td colspan="2" scope="col">Rating</td>
+  				<td scope="col">Numerical Rating</td>
+  				<td scope="col">Adjectival Rating</td>
   			</tr>
-  			<tr class="text-center">
-  				<td>Numerical</td>
-  				<td>Adjective</td>
-  			</tr>
+  			<tr>
   		<?php 
 			$sql = mysqli_query($connect, "SELECT a.prof_id, COUNT(a.prof_id) as samp_size, CONCAT(b.prof_fname,' ',b.prof_lname) as prof_name FROM tbl_eval a INNER JOIN tbl_prof b ON a.prof_id = b.prof_id INNER JOIN tbl_period c ON a.period = c.id WHERE b.prof_col = '$college' AND c.id = (SELECT id FROM tbl_period WHERE active = 1) GROUP BY a.prof_id");
 			$row_cnt = mysqli_num_rows($sql);
@@ -127,7 +125,7 @@
 		  				} elseif ($secave >= 5.00) {
 		  					$desc_ave = "Outstanding";
 		  				}
-	 					echo "<td><small>".$desc_ave."</small></td>";
+	 					echo "<td>".$desc_ave."</td>";
 	 					echo "</tr>";
 	 			}
 			}
@@ -135,7 +133,7 @@
   		</table>
   		<?php 
   			if ($row_cnt == 0) {
-  				echo "<p class='text-center'><small'>Nothing to show here</small></p>";
+  				echo "<p class='text-center'><small>Nothing to show here</small></p>";
   			}
   		 ?>
   		<br>

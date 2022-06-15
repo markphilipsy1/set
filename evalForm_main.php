@@ -4,6 +4,7 @@
 
 	if ($_SESSION['access'] == 'student') {
 		$prof_id = $_GET['prof_id'];
+		$schedcode = $_GET['schedcode'];
 		$stud_id = $_SESSION['studentnumber'];
 
 		$active = mysqli_query($connect, "SELECT MAX(id) as id FROM tbl_period");
@@ -30,7 +31,7 @@
 			$evalscore = implode(", ", $ans);
 
 
-			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $period, $evalscore, '$choice', '$strength', '$suggestion', '$overall')";
+			$ins_ans = "INSERT INTO tbl_eval values (NULL, $stud_id, $prof_id, $schedcode, $period, $evalscore, '$choice', '$strength', '$suggestion', '$overall')";
 			$res3 = mysqli_query($connect, $ins_ans);
 			
 			if ($res3) {

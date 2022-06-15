@@ -46,24 +46,24 @@
 
   			echo $college."<small style='float: right;'> Number of Evaluations Submitted: ".$evalnum['evalnum']."</small>"; ?></p>
   	<hr>
-  	<form method="POST" class="form-group">
-		  		<div class="row">
-		  			<label for="dept">College Department</label>
-					    <div class="col-sm-2">
-							<select id="dept" name="dept" class="custom-select">
-								<option value="all">ALL</option>
-							   	<?php 
-							   		$sql = mysqli_query($connect, "SELECT DISTINCT(prof_dept) FROM tbl_prof WHERE prof_col = '$college'");
-							   		while ($dept = mysqli_fetch_array($sql)) {
-							   			echo "<option value='".$dept['prof_dept']."'>".$dept['prof_dept']."</option>";
-							   		}
+	  	<form method="POST" class="form-group">
+			<div class="row">
+				<label for="dept">College Department</label>
+				    <div class="col-sm-2">
+						<select id="dept" name="dept" class="custom-select">
+							<option value="all">ALL</option>
+								   	<?php 
+								   		$sql = mysqli_query($connect, "SELECT DISTINCT(prof_dept) FROM tbl_prof WHERE prof_col = '$college'");
+								   		while ($dept = mysqli_fetch_array($sql)) {
+								   			echo "<option value='".$dept['prof_dept']."'>".$dept['prof_dept']."</option>";
+								   		}
 
-							   	 ?>
-						    </select>
-					    </div>
-					    	<button type="submit" class="btn btn-light" name="changedept" style="height: 30pt;">Review  <span class="fas fa-search"></span></button>
-		  		</div>
-			</form>
+								   	 ?>
+					    </select>
+				    </div>
+				<button type="submit" class="btn btn-light" name="changedept" style="height: 30pt;">Review  <span class="fas fa-search"></span></button>
+		  	</div>
+		</form>
   		<div class='text-center'>
   			<div class='row'>
   				<div class='col-sm-5'>
@@ -78,14 +78,14 @@
   			</div>
   		<?php 
 	  		if (!isset($_POST['changedept']) || $_POST['dept'] == 'all') {
-	  			$sql = "SELECT a.prof_id, CONCAT(a.prof_lname , ', ', a.prof_fname) AS prof_name, a.prof_col, a.prof_dept FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) ORDER BY prof_lname";
-	  		$res = mysqli_query($connect, $sql);	
+	  			$sql = "SELECT a.prof_id, CONCAT(a.prof_lname , ', ', a.prof_fname) AS prof_name, a.prof_col, a.prof_dept FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) GROUP BY prof_id ORDER BY prof_lname";
+	  			$res = mysqli_query($connect, $sql);	
 	  		}
 			else {
 				$dept = $_POST['dept'];
 
-				$sql = "SELECT a.prof_id, CONCAT(a.prof_lname , ', ', a.prof_fname) AS prof_name, a.prof_col, a.prof_dept FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND prof_dept = '$dept' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) ORDER BY prof_lname";
-			  		$res = mysqli_query($connect, $sql);
+				$sql = "SELECT a.prof_id, CONCAT(a.prof_lname , ', ', a.prof_fname) AS prof_name, a.prof_col, a.prof_dept FROM tbl_prof a INNER JOIN enrollscheduletbl b ON a.prof_id = b.instructor WHERE prof_col = '$college' AND prof_dept = '$dept' AND b.schoolyear = (SELECT year FROM tbl_period WHERE active = 1) AND b.semester = (SELECT semester FROM tbl_period WHERE active = 1) GROUP BY prof_id ORDER BY prof_lname";
+			  	$res = mysqli_query($connect, $sql);
 			}
 	  		while ($prof = mysqli_fetch_assoc($res)) {
 	  			echo "<div class='row'>";
@@ -94,7 +94,6 @@
 	  			<div class='col-sm-4'>
 	  				<a href="view.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-eye"></span></a>
 	  				<a href="edit.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-edit"></span></a>
-	  				<!-- <a href="delete.php?prof_id=<?php echo $prof['prof_id']; ?>"><span class="fa fa-archive"></span></a> -->
 	  			</div>
 	  		</div>
 	  		<?php 
